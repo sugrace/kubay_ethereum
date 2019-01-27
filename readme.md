@@ -1,13 +1,13 @@
 # Code 설명
    ## contracts 
-     1. kubay.sol
-        -변수
-            ```
+     
+     ### kubay.sol
+      -변수
             uint public productIndex; 
-            mapping (address =>mapping(uint => Product)) stores;
-            mapping (uint => address) productIdInStore;
-            mapping (uint => address) productEscrow; 
-            ```
+            mapping (address =>mapping(uint => Product)) stores;   
+            mapping (uint => address) productIdInStore;   
+            mapping (uint => address) productEscrow;    
+      
             : mapping (address =>mapping(uint => Product)) stores;
             은 stores[address][uint] 라는 2차원 배열로 보면되는데address 와 uint를 받아서 Product 구조체에 접근하게 된다.
         
@@ -27,15 +27,24 @@
                         bool revealed;  //노출 여부 
                         }
                         입찰 구조체로 입찰자의 주소와 ProductId 와 reveal 됬는지에 대한 여부 가 저장된다.
-* 함수
+        
+        
+        * 함수
             2. function bid(uint _productId, bytes32 _bid) payable public returns (bool){
+            
                     Product storage product = stores[productIdInStore[_productId]][_productId];
+                    //Product 객체를 선언하고 전달받은 _productId로 mapping 을통하여 해당 product 를 받아서 product 변수에 넣는다.
                     require (now >= product.auctionStartTime);
+                    
                     require (now <= product.auctionEndTime);
+                    
                     require(msg.value>product.startPrice);
+                    
                     require(product.bids[msg.sender][_bid].bidder == 0);
                     product.bids[msg.sender][_bid]=Bid(msg.sender, _productId, msg.value, false);
+                    
                     product.totalBids +=1;
+                    
                     return true;
                     }
                     
@@ -44,19 +53,19 @@
     Product storage product = stores[productIdInStore[_productId]][_productId];
     : Product 객체를 선언하고 전달받은 _productId로 mapping 을통하여 해당 product 를 받아서 product 변수에 넣는다.
 
-    require (now >= product.auctionStartTime);
-    require (now <= product.auctionEndTime);
-    require(msg.value>product.startPrice);
-    require(product.bids[msg.sender][_bid].bidder == 0);
-    :require은 요구부분이고 now 는 현재 시간을 뜻한다.
-    require (now >= product.auctionStartTime); 
-    현재시간이 product.auctionStartTime 보다 커야 함수가 실행된다는뜻이다.
+    require (now >= product.auctionStartTime);   
+    require (now <= product.auctionEndTime);  
+    require(msg.value>product.startPrice);  
+    require(product.bids[msg.sender][_bid].bidder == 0);     
+    :require은 요구부분이고 now 는 현재 시간을 뜻한다.  
+    require (now >= product.auctionStartTime);   
+    현재시간이 product.auctionStartTime 보다 커야 함수가 실행된다는뜻이다.  
 
-    모든 요구사항이 만족 하면 product 안에서 mapping 된 bids 라는 이름의 2차원배열 에 해당하는 변수(Bid구조체)에 Bid를 할당하여 넣는다.
+    모든 요구사항이 만족 하면 product 안에서 mapping 된 bids 라는 이름의 2차원배열 에 해당하는 변수(Bid구조체)에 Bid를 할당하여 넣는다.  
 
-    이것으로 입찰함수가 불려지면 Product 객체안에  product.bids[트랜잭션을 발생시킨accounts 의 주소 값][입찰번호] 의 정보가 입력되게 되고 
-    product.totalBids +=1;
-    해당 product의 총입찰수가 늘어납니다.
+    이것으로 입찰함수가 불려지면 Product 객체안에  product.bids[트랜잭션을 발생시킨accounts 의 주소 값][입찰번호] 의 정보가 입력되게 되고   
+    product.totalBids +=1;  
+    해당 product의 총입찰수가 늘어납니다.  
 
     function revealBid(uint _productId, string _amount, string _secret) public {
      .....
