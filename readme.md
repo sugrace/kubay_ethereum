@@ -2,10 +2,10 @@ Code 설명
  * contracts 
     1. kubay.sol
         -변수
-            uint public productIndex; 
+            ```uint public productIndex; 
             mapping (address =>mapping(uint => Product)) stores;
             mapping (uint => address) productIdInStore;
-            mapping (uint => address) productEscrow;
+            mapping (uint => address) productEscrow;```
 
             : mapping (address =>mapping(uint => Product)) stores;
             은 stores[address][uint] 라는 2차원 배열로 보면되는데address 와 uint를 받아서 Product 구조체에 접근하게 된다.
@@ -27,7 +27,7 @@ Code 설명
                         }
                         입찰 구조체로 입찰자의 주소와 ProductId 와 reveal 됬는지에 대한 여부 가 저장된다.
 * 함수
-    1. function bid(uint _productId, bytes32 _bid) payable public returns (bool){
+    2. ```function bid(uint _productId, bytes32 _bid) payable public returns (bool){
             Product storage product = stores[productIdInStore[_productId]][_productId];
             require (now >= product.auctionStartTime);
             require (now <= product.auctionEndTime);
@@ -35,7 +35,7 @@ Code 설명
             require(product.bids[msg.sender][_bid].bidder == 0);
             product.bids[msg.sender][_bid]=Bid(msg.sender, _productId, msg.value, false);
             product.totalBids +=1;
-            return true;
+            return true;```
 }
 입찰 함수로서 인자로 _productId 와  _bid 를 받아서입찰을 한다.
 
