@@ -34,16 +34,19 @@ struct Bid {
 * 함수
 ```
 function bid(uint _productId, bytes32 _bid) payable public returns (bool){
-      Product storage product = stores[productIdInStore[_productId]][_productId];
-      // Product 객체를 선언하고 전달받은 _productId로 mapping 을통하여 해당 product 를 받아서 product 변수에 넣는다.
-      require (now >= product.auctionStartTime);
-      // 현재시간이 product.auctionStartTime 보다 커야 함수가 실행된다는뜻이다.(require은 요구부분이고 now 는 현재 시간을 뜻한다.)
-      require (now <= product.auctionEndTime);
-      require(msg.value>product.startPrice);
-      require(product.bids[msg.sender][_bid].bidder == 0);
-      product.bids[msg.sender][_bid]=Bid(msg.sender, _productId, msg.value, false);
-      product.totalBids +=1;
-      return true;
+
+      Product storage product = stores[productIdInStore[_productId]][_productId];  
+      // Product 객체를 선언하고 전달받은 _productId로 mapping 을통하여 해당 product 를 받아서 product 변수에 넣는다.  
+      
+      require (now >= product.auctionStartTime);  
+      // 현재시간이 product.auctionStartTime 보다 커야 함수가 실행된다는뜻이다.(require은 요구부분이고 now 는 현재 시간을 뜻한다.)  
+      
+      require (now <= product.auctionEndTime);  
+      require(msg.value>product.startPrice);  
+      require(product.bids[msg.sender][_bid].bidder == 0);  
+      product.bids[msg.sender][_bid]=Bid(msg.sender, _productId, msg.value, false);  
+      product.totalBids +=1;  
+      return true;  
       }
 ```                    
 입찰 함수로서 인자로 _productId 와  _bid 를 받아서입찰을 한다.
