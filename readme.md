@@ -124,3 +124,48 @@ function refundAmountToBuyer(uint _productId) public {
 중개자가 거래를 완료하고 구매자에게 이더를 반환완료해주는 함수입니다. 이경우는 중개자가 거래가 잘못되었다는것을 판단하고 구매자가 이더를돌려준다
  
  
+##Escrow.sol
+ * 변수
+```uint public productId;```
+```address public buyer;```
+```address public seller;```
+```address public arbiter;```
+```uint public amount;```
+```bool public fundsDisbursed;```
+```mapping (address => bool) releaseAmount;```
+```uint public releaseCount;```
+```mapping (address => bool) refundAmount;```
+```uint public refundCount;```
+
+에스크로 계약에 필요한 변수들이 선언되며,
+fundsDisbursed 는 지출이 되었는지 를 나타내며
+ amount 는 현재 에스크로 에 있는 이더의 양을나타낸다
+
+releaseAmount 는 address를 받아서 접근하게되는데
+판매자에게이더가입금됬는지의여부이다.
+
+refundAmount 는 address를 받아서 접근하게되는데
+구매자에게이더가입금됬는지의여부이다.
+
+* 함수
+```
+function Escrow(uint _productId, address _buyer, address _seller, address _arbiter) payable public {
+...}
+```
+: Escrow 생성자로서 Escrow 계약을 생성합니다. 
+
+```
+function escrowInfo() view public returns (address, address, address, bool, uint, uint) {
+..}
+```
+:에스크로의 정보를 요청해서 반환한다.
+```
+ function releaseAmountToSeller(address caller) public {
+...}
+```
+판매자에게이더를송금한다.
+```
+function refundAmountToBuyer(address caller) public {
+..}
+```
+구매자에게이더를반환한다.
