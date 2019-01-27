@@ -1,6 +1,6 @@
 # Code 설명
 ## contracts 
-## kubay.sol
+### kubay.sol
  * 변수  
             ```uint public productIndex;```  
             ```mapping (address =>mapping(uint => Product)) stores; ```    
@@ -124,18 +124,18 @@ function refundAmountToBuyer(uint _productId) public {
 중개자가 거래를 완료하고 구매자에게 이더를 반환완료해주는 함수입니다. 이경우는 중개자가 거래가 잘못되었다는것을 판단하고 구매자가 이더를돌려준다
  
  
-##Escrow.sol
- * 변수
-```uint public productId;```
-```address public buyer;```
-```address public seller;```
-```address public arbiter;```
-```uint public amount;```
-```bool public fundsDisbursed;```
-```mapping (address => bool) releaseAmount;```
-```uint public releaseCount;```
-```mapping (address => bool) refundAmount;```
-```uint public refundCount;```
+ ### Escrow.sol  
+ * 변수  
+```uint public productId;```  
+```address public buyer;```  
+```address public seller;```  
+```address public arbiter;```  
+```uint public amount;```  
+```bool public fundsDisbursed;```  
+```mapping (address => bool) releaseAmount;```  
+```uint public releaseCount;```  
+```mapping (address => bool) refundAmount;```  
+```uint public refundCount;```  
 
 에스크로 계약에 필요한 변수들이 선언되며,
 fundsDisbursed 는 지출이 되었는지 를 나타내며
